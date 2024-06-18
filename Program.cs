@@ -1,4 +1,8 @@
 using CodingChallenge.Context;
+using CodingChallenge.Interfaces;
+using CodingChallenge.Models;
+using CodingChallenge.Repositories;
+using CodingChallenge.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -23,8 +27,11 @@ builder.Services.AddDbContext<AppDbContext>(opts =>
     opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddScoped<IRepository<int, Event>, EventRepository>();
+builder.Services.AddScoped<IRepository<int, User>, UserRepository>();
 
-
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
